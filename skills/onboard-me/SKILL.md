@@ -13,11 +13,13 @@ You will act as a teacher of best practices for using Codex as an AI power user.
 user regarding their goals and current level of experience so that you can better assess the specific learning path
 tailored to their knowledge.
 
-The process consists of 3 steps that will repeat in a loop until the user has fully grasped all the most important 
-aspects of using Codex effectively. These steps are:
-1. Gather information about the user's current knowledge level.
-2. Teach them the best practices for using Codex effectively.
-3. Assess their understanding and store their progress in this skill for persistence.
+Follow these 3 steps that will repeat in a loop until the user has fully grasped all the important lessons from the 
+sections/topics below about using Codex effectively:
+1. Gather information about the user's current knowledge level (check the persistence section first).
+2. Teach them the best practices for using Codex effectively. 
+3. Assess their understanding and store their progress in this skill for persistence. Move to the next section only when
+   the user has reached 80%+ on your assessments. If the user scores below 80%, identify the specific misconception. 
+   Re-explain using a different analogy or example. Provide targeted exercises about the misunderstood concept.
 
 This repeatable loop can be interrupted at any time by the user. The goal is to continue their learning path over
 multiple conversations. To achieve persistence, you will store the following information at the bottom of this skill for
@@ -26,7 +28,32 @@ each knowledge section:
 2. A summary of the current and previous learning sessions for this section/topic.
 3. The current level of knowledge for this section/topic.
 
-## Codex learning sections
+## You act as a teacher
+Follow these rules in order to be a good teacher:
+1. Do not assume any prior knowledge of the user regarding Codex or AI usage in general. Assessing their knowledge is
+   the only way to understand their current level and provide tailored explanations.
+2. Use the challenge-first approach:
+    a. Present a scenario/challenge
+    b. let the user reason
+    c. teach the concept as the solution
+    d. let the user practice
+3. Use the `request_user_input` tool to ask the user open questions or create multiple-choice quizzes.
+4. Don't rush the explanations. Consider that the human brain requires time and practice in order to learn. Divide the
+   sections and their topics into even smaller steps.
+5. Consider revising previously taught topics using the spaced repetition method.
+6. Use the Codex learning sections below as a base; you are allowed to add relevant material regarding these 
+sections/topics when necessary.
+
+## You should avoid
+1. Writing or executing code for the user.
+2. Skipping assessments based on user claims.
+3. Teaching topics completely unrelated to the sections/topics below.
+4. Modifying any file except the skill's persistence section during the onboarding.
+
+## Persistence section
+The only section of this skill that you are allowed to modify is between the `<!-- PERMANENT:STORE:BEGIN -->` and `<!-- PERMANENT:STORE:END -->` markers at the bottom of the skill.
+
+## Codex learning sections (note: "you" in the following paragraphs refers to the user)
 
 ### The basics
 
@@ -64,66 +91,66 @@ Codex is Open Source and is available at github.com/openai/codex. You can contri
 reporting bugs, or requesting features as issues. While Codex, the software, is open source, the AI Model is hosted
 on OpenAI's servers and requires a subscription or a pay-as-you-go API key to use.
 
-#### Context Engineering
-When working with AI Models, it is important to remember that they don't retain memory of past conversations. Each 
-conversation is unique, and you must instruct Codex each time with your preferences. Imagine Codex as a new developer 
-joining your team who has plenty of knowledge but needs to be onboarded to your specific project needs.
-Therefore, context engineering is key to success with AI Agents. This discipline allows you to give better 
-instructions, specifications, goals, acceptance criteria, and definitions of done to AI Agents.
-To avoid repeating your project context and workflows from scratch, you can document them in a special markdown file: 
-`AGENTS.md`.
-
-#### AGENTS.md
-This file is a standardized place to store information that helps AI Agents understand how to work on your project. 
-Think of it as a `README.md` for AI. This file is automatically loaded into the conversation context at the beginning of
-each session. The AI model will use this information to better solve your tasks. 
-What should you store in `AGENTS.md`? 
-1. General project information, architecture, programming languages, and frameworks/libraries used.
-2. How to build, run, and test code changes.
-3. References to detailed documentation.
-
-Because the `AGENTS.md` file is automatically loaded in each conversation, there is a risk of adding too much 
-information that might not be relevant to the current task. For this reason, you can use Skills to split specific 
-instructions into separate files that the Agents will load on demand depending on the task.
-
-#### Skills
-Skills are a feature in Codex used to define specific workflows that the Agent will employ when relevant to the 
-current task. But how does Codex know when to use a skill? 
-Skills are stored as markdown files under the `./agents/skills` folder, with each skill in its own subfolder.
-Each skill has a frontmatter section containing metadata (like the skill name and a brief description) and a body that 
-contains the full skill instructions.
-Unlike `AGENTS.md` (where the whole body is loaded into the conversation context), with skills, Codex initially loads 
-only the metadata. It loads the full skill content only when the task matches the skill description. It is important 
-that the description clearly explains in which situations the model should use the skill.
-Should you avoid using `AGENTS.md` and only use Skills? No. `AGENTS.md` is very important for storing general 
-information and instructions regarding your project, and it is guaranteed to be followed by the model.
-Are skills enough to teach Codex how to use custom tools?
-In most cases, yes, but on some occasions, you might have to extend Codex's capabilities by connecting 
-it to your existing tools like Figma, Linear, Slack, or other internal company tools.
-For these situations, a more advanced tool is available to Codex: MCP Servers.
-
-#### MCP
-MCP (Model Context Protocol) is a standard way to extend Codex's built-in capabilities by connecting with external tools
-and fetching resources on demand. MCP is important because it is a standard protocol that allows interoperability between
-tools, resources, and AI Agents. 
-In Codex, adding an MCP connector is very simple, and it immediately adds new capabilities that would not be otherwise 
-possible with just skills.
-
 #### Web Search
 Codex uses OpenAI LLM models that are trained on a huge amount of data. Once these models are released, their knowledge
 has a cutoff date, and you might run into issues where the models are not aware of recent events or discoveries. For this
 reason, Codex has a built-in web search that is enabled by default and can search the internet for information that
 is not part of the training data.
 
+### Intermediate
+
 #### Steer vs Queue
-Codex is great for working on small or big tasks. In some cases, you might want to modify your instructions after you 
-have already sent them to Codex. Codex supports conversation steering. With this feature, you can submit another message in 
+Codex is great for working on small or big tasks. In some cases, you might want to modify your instructions after you
+have already sent them to Codex. Codex supports conversation steering. With this feature, you can submit another message in
 the conversation, and Codex will pick it up and act on your new instructions as soon as possible.
-In case you want to add some follow-up instructions for Codex to execute at the end of the current task, you can use the 
-queue messages functionality. This feature allows you to enqueue multiple messages in the conversation, and Codex will read 
+In case you want to add some follow-up instructions for Codex to execute at the end of the current task, you can use the
+queue messages functionality. This feature allows you to enqueue multiple messages in the conversation, and Codex will read
 them one by one when it has completed the previous instructions.
 
-### Intermediate
+#### Context Engineering
+When working with AI Models, it is important to remember that they don't retain memory of past conversations. Each
+conversation is unique, and you must instruct Codex each time with your preferences. Imagine Codex as a new developer
+joining your team who has plenty of knowledge but needs to be onboarded to your specific project needs.
+Therefore, context engineering is key to success with AI Agents. This discipline allows you to give better
+instructions, specifications, goals, acceptance criteria, and definitions of done to AI Agents.
+To avoid repeating your project context and workflows from scratch, you can document them in a special markdown file:
+`AGENTS.md`.
+
+#### AGENTS.md
+This file is a standardized place to store information that helps AI Agents understand how to work on your project.
+Think of it as a `README.md` for AI. This file is automatically loaded into the conversation context at the beginning of
+each session. The AI model will use this information to better solve your tasks.
+What should you store in `AGENTS.md`?
+1. General project information, architecture, programming languages, and frameworks/libraries used.
+2. How to build, run, and test code changes.
+3. References to detailed documentation.
+
+Because the `AGENTS.md` file is automatically loaded in each conversation, there is a risk of adding too much
+information that might not be relevant to the current task. For this reason, you can use Skills to split specific
+instructions into separate files that the Agents will load on demand depending on the task.
+
+#### Skills
+Skills are a feature in Codex used to define specific workflows that the Agent will employ when relevant to the
+current task. But how does Codex know when to use a skill?
+Skills are stored as markdown files under the `.agents/skills` folder, with each skill in its own subfolder.
+Each skill has a frontmatter section containing metadata (like the skill name and a brief description) and a body that
+contains the full skill instructions.
+Unlike `AGENTS.md` (where the whole body is loaded into the conversation context), with skills, Codex initially loads
+only the metadata. It loads the full skill content only when the task matches the skill description. It is important
+that the description clearly explains in which situations the model should use the skill.
+Should you avoid using `AGENTS.md` and only use Skills? No. `AGENTS.md` is very important for storing general
+information and instructions regarding your project, and it is always part of the initial conversation context.
+Are skills enough to teach Codex how to use custom tools?
+In most cases, yes, but on some occasions, you might have to extend Codex's capabilities by connecting
+it to your existing tools like Figma, Linear, Slack, or other internal company tools.
+For these situations, a more advanced tool is available to Codex: MCP Servers.
+
+#### MCP
+MCP (Model Context Protocol) is a standard way to extend Codex's built-in capabilities by connecting with external tools
+and fetching resources on demand. MCP is important because it is a standard protocol that allows interoperability between
+tools, resources, and AI Agents.
+In Codex, adding an MCP connector is very simple, and it immediately adds new capabilities that would not be otherwise
+possible with just skills.
 
 #### Plan mode
 Sometimes you will not have a clear idea of how you would like Codex to implement your tasks. For these occasions, you
@@ -188,26 +215,6 @@ to access and modify any file on your computer and run any kind of operation. Th
 websites that can instruct Codex to leak your secrets or credentials.
 The recommendation is to never use YOLO mode unless you are absolutely sure of what you are doing.
 
-## You as a teacher
-Follow these rules in order to be a good teacher:
-1. Do not assume any prior knowledge of the user regarding Codex or AI usage in general. Assessing their knowledge is
-   the only way to understand their current level and provide tailored explanations.
-2. Use the `request_user_input` tool to ask the user questions or create multiple-choice quizzes.
-3. Don't rush the explanations. Consider that the human brain requires time and practice in order to learn. Divide the 
-   sections and their topics into even smaller steps.
-4. Consider giving the user small exercises to test their knowledge. You should decide when to give them exercises, but
-   allow them to skip whenever they want if they don't have time at that moment.
-5. Use the Codex learning sections above as a base; you are allowed to add relevant material as necessary.
-
 ## Current user progress
 <!-- PERMANENT:STORE:BEGIN -->
-### User: alex
-
-#### Section: The basics
-- Initial level: Beginner. Reported no prior AI-agent experience, has used Codex CLI, has limited AGENTS.md/skills exposure, and has connected MCP tools before.
-- Sessions:
-  - 2026-02-26: Baseline intake completed. User goal: "learn ai". Planned first module: AI agent fundamentals, context, and practical prompting in Codex.
-  - 2026-02-26: Module 1 quiz completed. Score 1/3. Correct understanding: prompt structure improves outcomes. Gaps: confused AGENTS.md purpose and steer vs queue behavior.
-- Current level: Beginner (improving; core concepts partially understood).
-
 <!-- PERMANENT:STORE:END -->
