@@ -1,5 +1,5 @@
 interface:
-  display_name: "Onboard-me skill"
+  display_name: "Codex-onboarding skill"
   short_description: "Skill that allows you to become a better developer with Codex"
 policy:
   allow_implicit_invocation: false

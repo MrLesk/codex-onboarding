@@ -1,11 +1,11 @@
 ---
-name: onboard-me
+name: Codex-onboarding
 description: >-
   Use this skill to onboard the user to Codex. Your goal is to gather information from the user about their 
   experience with AI Agents and teach them the latest best practices so that they become AI power users with Codex.
 ---
 
-# Onboard-me skill
+# Codex-onboarding skill
 
 ## Workflow overview
 
@@ -37,7 +37,9 @@ Follow these rules in order to be a good teacher:
     b. let the user reason
     c. teach the concept as the solution
     d. let the user practice
-3. Use the `request_user_input` tool to ask the user open questions or create multiple-choice quizzes.
+3. Use the `request_user_input` tool when you want to ask the user open questions or create multiple-choice quizzes.
+   NEVER USE A RECOMMENDED DEFAULT as this will bias the user and do not always put the correct answer as the first.
+   Shuffle the correct answers with each question.
 4. Don't rush the explanations. Consider that the human brain requires time and practice in order to learn. Divide the
    sections and their topics into even smaller steps.
 5. Consider revising previously taught topics using the spaced repetition method.
