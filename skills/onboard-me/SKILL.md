@@ -43,6 +43,10 @@ Codex can store a large amount of text in its context, such as entire books. But
 Codex has a special tool called **compaction**. This tool grabs the most important information from the conversation
 context and drops the rest, allowing you to continue working on your tasks.
 
+#### Resume previous conversations
+If you close Codex and want to resume a previous conversation, you can easily do so. Each version of Codex offers a 
+conversation history where you can choose and continue any of your past conversations.
+
 #### Codex versions
 Codex is available as a CLI (Command Line Interface), a desktop application, IDE extensions, and a web interface. Users 
 can choose the version that best fits their workflow:
@@ -155,14 +159,34 @@ instructions on how to spot bugs to avoid bias from the code it just wrote.
 
 ### Advanced
 
-#### Sub Agents orchestration
-TBD
+#### Sub-Agents orchestration
+After you master the basic Agent loop with Codex, you are ready to jump to more complex scenarios where you delegate a
+task to Codex, and Codex will break it down into smaller parts and delegate them to nested Codex agents. This 
+makes your main Codex agent an effective orchestrator of multiple AI Agents working towards your goal.
+Codex will spawn sub-agents when deemed necessary, but it will also use sub-agents when you explicitly ask it to do so.
+These nested agents will inherit the same permissions from the main Codex instance and could, in theory, spawn other 
+nested agents.
+The advantage of using sub-agents is that the main conversation context doesn't get bloated by unnecessary information.
+When should you use nested agents?
+1. To do extensive research across your project or on the internet.
+2. To work on tasks in parallel.
+3. To read debug output or read web pages.
+4. To write documentation.
 
-#### Self improving loop
-TBD
+#### Self-improving loop
+The next level of the self-verification loop is the self-improving loop. You can create a compound improvement when using 
+Codex by telling it to write down instructions to avoid common mistakes or patterns based on your conversations.
+A typical use case is to tell Codex to read all past conversations, find common pitfalls, and write instructions in your 
+`AGENTS.md` that would prevent them from repeating.
+You can also create a recurring job that does this automatically.
 
 #### YOLO Mode
-TBD
+By default, Codex uses a powerful sandbox that prevents it from running operations that could be dangerous on your computer.
+When you are an expert user and already have an existing sandbox (like running on a Virtual Machine or a special environment
+with low permissions), you can run Codex in YOLO mode. This will disable all security protections, and Codex will be able 
+to access and modify any file on your computer and run any kind of operation. These could involve accessing malicious 
+websites that can instruct Codex to leak your secrets or credentials.
+The recommendation is to never use YOLO mode unless you are absolutely sure of what you are doing.
 
 ## You as a teacher
 Follow these rules in order to be a good teacher:
@@ -171,9 +195,19 @@ Follow these rules in order to be a good teacher:
 2. Use the `request_user_input` tool to ask the user questions or create multiple-choice quizzes.
 3. Don't rush the explanations. Consider that the human brain requires time and practice in order to learn. Divide the 
    sections and their topics into even smaller steps.
-4. Consider giving the user small exercises to test their knowledge, but allow them to skip whenever they want.
+4. Consider giving the user small exercises to test their knowledge. You should decide when to give them exercises, but
+   allow them to skip whenever they want if they don't have time at that moment.
+5. Use the Codex learning sections above as a base; you are allowed to add relevant material as necessary.
 
 ## Current user progress
 <!-- PERMANENT:STORE:BEGIN -->
+### User: alex
+
+#### Section: The basics
+- Initial level: Beginner. Reported no prior AI-agent experience, has used Codex CLI, has limited AGENTS.md/skills exposure, and has connected MCP tools before.
+- Sessions:
+  - 2026-02-26: Baseline intake completed. User goal: "learn ai". Planned first module: AI agent fundamentals, context, and practical prompting in Codex.
+  - 2026-02-26: Module 1 quiz completed. Score 1/3. Correct understanding: prompt structure improves outcomes. Gaps: confused AGENTS.md purpose and steer vs queue behavior.
+- Current level: Beginner (improving; core concepts partially understood).
 
 <!-- PERMANENT:STORE:END -->
